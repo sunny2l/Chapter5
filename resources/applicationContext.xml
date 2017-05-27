@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	<bean id="zhanShenArmet" class="entity.Equip">
+		<property name="name" value="战神头盔" />
+		<property name="type" value="头盔" />
+		<property name="speedPlus" value="2" />
+		<property name="attackPlus" value="4" />
+		<property name="defencePlus" value="6" />
+	</bean>
+	<bean id="lianHuanLoricae" class="entity.Equip">
+		<property name="name" value="连环锁子甲" />
+		<property name="type" value="铠甲" />
+		<property name="speedPlus" value="6" />
+		<property name="attackPlus" value="4" />
+		<property name="defencePlus" value="15" />
+	</bean>
+	<bean id="boSiBoot" class="entity.Equip">
+		<property name="name" value="波斯追风靴" />
+		<property name="type" value="靴子" />
+		<property name="speedPlus" value="8" />
+		<property name="attackPlus" value="2" />
+		<property name="defencePlus" value="3" />
+	</bean>
+	<bean id="lanMoRing" class="entity.Equip">
+		<property name="name" value="蓝魔指环" />
+		<property name="type" value="指环" />
+		<property name="speedPlus" value="8" />
+		<property name="attackPlus" value="12" />
+		<property name="defencePlus" value="2" />
+	</bean>
+	<bean id="player" class="entity.Player">
+		<property name="armet" ref="zhanShenArmet" />
+		<property name="loricae" ref="lianHuanLoricae" />
+		<property name="boot" ref="boSiBoot" />
+		<property name="ring" ref="lanMoRing" />
+	</bean>
+	<!-- 声明增强方法所在的Bean -->
+	<bean id="theFree" class="aop.FreeUpdate"></bean>
+	<!-- 配置切面 -->
+	<aop:config>
+		<!-- 定义切入点 -->
+		<aop:pointcut id="pointcut"
+			expression="execution(public void updateEquip(entity.Equip))" />
+		<!-- 引用包含增强方法的Bean -->
+		<aop:aspect ref="theFree">
+			<!-- 将before()方法定义为前置增强并引用pointcut切入点 -->
+			<aop:before method="before" pointcut-ref="pointcut"></aop:before>
+		</aop:aspect>
+	</aop:config>
+	<bean id="aa" class="XXX">
+		<property name="name">
+			<null />
+		</property>
+	</bean>
+</beans>
